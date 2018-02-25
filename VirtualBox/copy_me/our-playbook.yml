@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: local
   tasks:
     - name: Remove NTP
       apt: pkg=ntp state=absent update_cache=true
