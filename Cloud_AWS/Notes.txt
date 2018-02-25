@@ -1,0 +1,86 @@
+This tutorials was followed. https://www.youtube.com/watch?v=wpIgvy34BzU
+
+Steps:
+1. Create 4 EC2 instances [t2.miro(free tier), 
+                           All default in confugure Instance detail, 
+                           Add 20 Gb storage General purpose SSD(GP2),
+                           Tag Instance {'Name' : 'nodes'},
+                           Configure Security Group(Create new security group - {'security_group_name':'mysecuregroup','dscription':'mysecuregroup'}, Add Rule : SSH(source:anywhere), HTTP(source:anywhere), HTTPS(source:anywhere), All ICMP(port range : 0-65535)),
+                           Launch Instance (create a new key pair : mynodes) - download key pair mynodes.pem file ]
+
+2. Rename name of runing EC2 instances as master, node1, node2 and node3
+3. Create 4 elastic ips so that we can have static ips for all of our ec2 instances even after restarting it.
+4. Associate elastic ips to our ec2 instance.
+5. open terninal and cd to directory where we dowloaded keypair. And do chmod 400 mynodes.pem.
+6. Now we can connect with master server with this command (ssh -i "mynodes.pem" ec2-user@ec2-34-217-244-94.us-west-2.compute.amazonaws.com) - here this 34-217-244-94 is public or elastic ips
+    Similarly we can connect to other three instances as well.
+7. ssh to all the instances and create a user and password ("test","test") with this command
+    sudo useradd test
+    suso paswd test
+8. Now we need to make sure that the  password authentication and permit root login is enabled to root before we switch to test user.
+    To do that we need to update '/etc/ssh/sshd_config' in all the ec2 instances.
+    > cd /etc/ssh
+    > sudo vi sshd_config
+    -type /PasswordAuthentication to find it. Then press i to go insert mode and uncomment the line to make it yes
+    -type /PermitRootLogin to find it. Then press i to go in insert mode and the uncomment it.
+    -the refresh sshd service with this command 'sudo systemctl restart sshd'
+9. After doing step 8 we should be able to ssh to all ec2 instances as test user without uing the 'mynodes.pem' file.
+    master : ssh test@ec2-34-217-244-94.us-west-2.compute.amazonaws.com
+10. Now we need to make sure that all the ec2 instances can communicate with each other using ssh without password. This will happen by using a key across all the machine individually.
+11. Before we do it lets give the user 'test' root privledge on all ec2 instances. To do this ssh to machine as ec2_user using 'mynodes.pem' file
+    -Then press suso su - to switch to root user.
+    -Then vi /etc/sudoers
+    -go to last line press i to go in insert mode and type this 'test            ALL=(ALL)       NOPASSWD: ALL'
+    -This is readonly file so use this to save it ':wq!'
+    -We can check if it worked by doing ssh as test user (passwd = test without .pem file) and typing 'sudo su -'. If we can switch to root succesffully it means test has root priveledges now.
+12. Now lets exit from all ssh connection from all ec2 instances and ssh back as a test user.
+13.Lets get public and private ip of all machines
+    - master
+      public  : 34.217.244.94 or ec2-34-217-244-94.us-west-2.compute.amazonaws.com
+      private : 172.31.23.59  or host name or domain name    (ssh test@34.217.244.94) ssh test@ec2-34-217-244-94.us-west-2.compute.amazonaws.com
+    - node1
+      public  : 35.160.125.80
+      private : 172.31.17.250 (ssh  test@ec2-35-160-125-80.us-west-2.compute.amazonaws.com)
+    - node2
+      public  : 52.36.201.53
+      private : 172.31.28.26   (ssh test@ec2-52-36-201-53.us-west-2.compute.amazonaws.com)
+    - node3
+      public  : 52.43.160.227
+      private : 172.31.25.89 (ssh test@ec2-52-43-160-227.us-west-2.compute.amazonaws.com)
+14. Now lets get back to left over task of step 10 to make sure all ec2 can communicate each other without password. It can be done by creating keys and sharing with each other.
+    - generate key on all machine with command 'ssh-keygen' (do it as testuser)
+    - copy the key f each machine to all other machine. It can be done with this command ssh-copy-id 172.31.17.250 (private ip of other machine)
+15. Now we need to install ANSIBLE on all machine.
+16. Before installing ANSIBLE first install EPEL-RELEASE on all machine because EPEL repository has ANSIBLE. We can use 'wget' to get EPEL
+    We can confirm that EPEL repo is not in machine by going at this place 'cd /etc/yum.repos.d/' and doing ls
+    - wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm (didn't work)
+    - sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    If wget is not present then install wget with yum like this 'sudo yum install wget'
+    At the end we should see epel.repo  epel-testing.repo at 'cd /etc/yum.repos.d/'
+17. Update yum - sudo yum update
+18. Install ANSIBLE all all machine - sudo yum install ansible -y. (check with ansible --version)
+19. Turn logging ON in master node by updating this file /etc/ansible/ansible.cfg.
+    - search /logging and uncomment it
+    - do chmod 777 to logfile (/var/log/ansible.log) initially this file might not exist and hence create this file first and then run chmod.
+    - take a backup of /etc/ansible/ansible.cfg. this file (sudo cp ansible.cfg ansible.cfg.original)
+    
+20. Ensure that python is installed on all machines and they all are of same verions. ansible heavily depends on python.
+OVERWRITING THE DEAFULT ansible.cfg
+21. cd to /etc/ansible and check the result of this cmd 'set |grep -i ansible'. We will see one reslt 
+    - 'PWD=/etc/ansible
+       _=/etc/ansible/'. 
+   Lets export a new path (export ANSIBLE_CONFIG=/home/test/config/ansible.cfg) and then we will make a copy of ansible.cfg at the exported path. Now if we will run cmd 'set |grep -r ansible', it should return the newly exported path too like this 
+    - ANSIBLE_CONFIG=/home/test/config/ansible.cfg
+      PWD=/etc/ansible
+      _=ANSIBLE_CONFIG
+   Now ansible should look for *.cfg file in this new location
+   In order to undo the override - just do export again (export ANSIBLE_CONFIG=/etc/ansible/ansible.cfg)
+22. Add some ip address to host file in /etc/ansible/host
+
+23. Now lets check if we can communicate to all nodes from master node. W already have listed all nodes ip address in host file. We can use ansible ping module like this
+    - ansible apacheweb -m ping   (here apacheweb is a group name in host file)
+24. By default ansible read the host file at /etc/ansible/host but if we want to use our host file then we can use this cmd - ansible groupname -i pathOfHostFile -m ping
+
+
+
+1:25 min
