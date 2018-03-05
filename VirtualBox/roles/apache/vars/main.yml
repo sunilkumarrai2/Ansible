@@ -1,2 +1,2 @@
 ---
-# vars file for __template__
+website_dir: /var/www/oursite.dev/web

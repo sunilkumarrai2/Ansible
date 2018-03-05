@@ -1,8 +1,5 @@
 ---
 - hosts: local
-  
-  vars:
-    - website_dir: /var/www/oursite.dev/web
 
   roles:
     - apache
