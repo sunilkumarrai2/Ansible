@@ -72,7 +72,7 @@ pipeline {
       stage('Hello') {
          steps {
             sh "echo '*********************************'"
-            sh "echo stack_idntfr : ${params.file_location}"
+            sh "echo file_location : ${params.file_location}"
             sh "echo crq : ${params.CRQ}"
             sh "echo env : ${params.ENV}"
             sh "echo stack_idntfr : ${params.STACK_IDENTIFIER}"
