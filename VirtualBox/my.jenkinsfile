@@ -1,5 +1,6 @@
 import hudson.model.*
 import hudson.EnvVars
+from jenkinsapi.jenkins import Jenkins
 
 //This is a test comment.
 
