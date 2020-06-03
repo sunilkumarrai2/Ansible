@@ -72,10 +72,11 @@ pipeline {
       stage('Hello') {
          steps {
             sh "echo '*********************************'"
-            sh "echo ${params.CRQ}"
-            sh "echo ${params.ENV}"
-            sh "echo ${params.STACK_IDENTIFIER}"
-            sh "echo *********************************"
+            sh "echo stack_idntfr : ${params.file_location}"
+            sh "echo crq : ${params.CRQ}"
+            sh "echo env : ${params.ENV}"
+            sh "echo stack_idntfr : ${params.STACK_IDENTIFIER}"
+            sh "echo '*********************************'"
             git credentialsId: 'bf5e3fbc-9467-41c0-942b-13c4ed7cc822', url: 'https://github.com/sunilkumarrai2/Ansible.git'
             sh "echo ${params.file_location}"
             sh "rm -rf ${params.file_location}"
