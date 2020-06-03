@@ -79,7 +79,7 @@ pipeline {
             sh "echo env : ${params.ENV}"
             sh "echo stack_idntfr : ${params.STACK_IDENTIFIER}"
             sh "echo '*********************************'"
-            git credentialsId: 'bf5e3fbc-9467-41c0-942b-13c4ed7cc822', url: 'https://github.com/sunilkumarrai2/Ansible.git'
+            //git credentialsId: 'bf5e3fbc-9467-41c0-942b-13c4ed7cc822', url: 'https://github.com/sunilkumarrai2/Ansible.git'
             sh "echo ${params.file_location}"
             sh "rm -rf ${params.file_location}"
             sh "cp -r . ${params.file_location}"
