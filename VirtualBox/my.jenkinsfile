@@ -1,6 +1,8 @@
 import hudson.model.*
 import hudson.EnvVars
 
+//This is a test comment.
+
 script {
             env.defaultBranch = "development"
             env.environments = "poc\ndev\nsit\nuat"
