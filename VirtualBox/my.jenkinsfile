@@ -6,6 +6,10 @@ import hudson.EnvVars
 script {
             env.defaultBranch = "development"
             env.environments = "poc\ndev\nsit\nuat"
+            j = Jenkins(env.JENKINS_URL)
+            job = j.get_job("atomosphere pipeline")
+            build = job.get_last_build()
+            env.all_parameters = build.get_actions()['parameters']
         }
         
 pipeline {
@@ -78,6 +82,7 @@ pipeline {
             sh "echo crq : ${params.CRQ}"
             sh "echo env : ${params.ENV}"
             sh "echo stack_idntfr : ${params.STACK_IDENTIFIER}"
+            sh "echo all_param : ${env.all_parameters}"
             sh "echo '*********************************'"
             //git credentialsId: 'bf5e3fbc-9467-41c0-942b-13c4ed7cc822', url: 'https://github.com/sunilkumarrai2/Ansible.git'
             sh "echo ${params.file_location}"
