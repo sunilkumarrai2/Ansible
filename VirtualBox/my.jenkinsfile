@@ -2,6 +2,10 @@ import hudson.model.*
 import hudson.EnvVars
 //from jenkinsapi.jenkins import Jenkins
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
+
+def hi() {
+    println("Hello World!!!!!!!!!!!!!!")
+}
 script {
             env.defaultBranch = "development"
             env.ENV = "uat"
@@ -13,10 +17,6 @@ script {
             print("HELLO WORLD")
             print(env.BRANCH_NAME)
             hi() 
-            
-            def hi() {
-    println("Hello World!!!!!!!!!!!!!!")
-}
         }
         
         
