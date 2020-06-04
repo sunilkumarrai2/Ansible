@@ -1,7 +1,7 @@
 import hudson.model.*
 import hudson.EnvVars
 //from jenkinsapi.jenkins import Jenkins
-
+//http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 script {
             env.defaultBranch = "development"
             env.environments = "poc\ndev\nsit\nuat"
