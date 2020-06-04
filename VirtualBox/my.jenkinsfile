@@ -12,6 +12,11 @@ script {
             print(currentBuild.toString())
             print("HELLO WORLD")
             print(env.BRANCH_NAME)
+            hi() 
+            
+            def hi() {
+    println("Hello World!!!!!!!!!!!!!!")
+}
         }
         
         
