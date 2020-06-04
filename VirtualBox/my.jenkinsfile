@@ -2,10 +2,7 @@ import hudson.model.*
 import hudson.EnvVars
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
-def computeChoice(choices){
-  print(choices)
-  return "uat\ndev\nsit\npoc"
-}
+
 def defaults = [ 
                    "CRQ":"33213213",
                    "ENV":"",
@@ -20,6 +17,12 @@ def defaults = [
                    "PLAYBOOK_DIR":"playbooks/",
                    "OPTIONS":"",
                ]
+
+def computeChoice(choices, paramName){
+  print(choices)
+  print(paramName)
+  return choices
+}
                
 def choices = [ 
                    "ENV":"poc\ndev\nsit\nuat",
@@ -52,10 +55,10 @@ pipeline {
                        defaultValue: defaults.CRQ,
                        description: 'CRQs are required for UAT and PRD'
                 choice name: 'ENV',
-                       choices: computeChoice("poc\ndev\nsit\nuat"),
+                       choices: computeChoice("poc\ndev\nsit\nuat" , 'ENV'),
                        description: 'Choose AWS Account'
                 choice name: 'STACK_IDENTIFIER',
-                       choices: computeChoice('1\n2\n3\n4\n5\n6\n7\n8'),
+                       choices: computeChoice('1\n2\n3\n4\n5\n6\n7\n8' , 'ENV'),
                        description: 'Choose function'
                 booleanParam name: 'DEBUG',
                              defaultValue: defaults.DEBUG,
@@ -68,10 +71,10 @@ pipeline {
                        defaultValue: defaults.glue_job_name_to_be_stopped,
                        description: """This input is used only when we want to stop all instances of given glue job in running state. Choose "execute_f360" playbook and "stop_job_runs" tag"""
                 choice name: 'TAGS',
-                       choices: computeChoice("none\ncode_deploy\ndynamodb_attribute\ndynamodb_operational\ndynamodb_configurational\ns3\nsns\niam\netl_driver_lambda\nom_cleanup_lambda\nglue_job_migrate_cmt\nglue_job_load_attribute_table\nglue_job_enrollment_etl\nglue_job_medical_driver\nglue_job_medical_etl\nglue_job_vision_etl\nglue_job_vsp_extract_etl\nstep_function\nall_glue_jobs\nstop_job_runs\nclear_om_table\nall"),
+                       choices: computeChoice("none\ncode_deploy\ndynamodb_attribute\ndynamodb_operational\ndynamodb_configurational\ns3\nsns\niam\netl_driver_lambda\nom_cleanup_lambda\nglue_job_migrate_cmt\nglue_job_load_attribute_table\nglue_job_enrollment_etl\nglue_job_medical_driver\nglue_job_medical_etl\nglue_job_vision_etl\nglue_job_vsp_extract_etl\nstep_function\nall_glue_jobs\nstop_job_runs\nclear_om_table\nall" , 'ENV'),
                        description: 'Ansible --tags'
                 choice name: 'PLAYBOOK',
-                       choices: computeChoice("provision_f360\nprovision_lambda\nterminate_f360\nterminate_lambda\nexecute_f360\ncode_deploy\njenkinsfile_update"),
+                       choices: computeChoice("provision_f360\nprovision_lambda\nterminate_f360\nterminate_lambda\nexecute_f360\ncode_deploy\njenkinsfile_update" , 'ENV'),
                        description: """Playbook to run. Examples:<br>
                                         jenkinsfile_update<br>
                                         provision_f360<br>
@@ -85,13 +88,13 @@ pipeline {
                                       */master - master branch<br>
                                       */development - development branch<br>"""
                 choice name: 'APPLICATION',
-                       choices: computeChoice("chp-f360-gde-app"),
+                       choices: computeChoice("chp-f360-gde-app" , 'ENV'),
                        description: 'Application to build'
                 string name: 'PLAYBOOK_DIR',
                        defaultValue: defaults.PLAYBOOK_DIR,
                        description: 'An optional additional directory'
                 choice name: 'OPTIONS',
-                       choices: computeChoice("\ncheck\nlist-hosts\nlist-tags\nlist-tasks\nsyntax-check"),
+                       choices: computeChoice("\ncheck\nlist-hosts\nlist-tags\nlist-tasks\nsyntax-check" , 'ENV'),
                        description: """check - do not make any changes; instead, try to predict some of the changes that may occur<br>
                                     list-hosts - outputs a list of matching hosts; does not execute anything else<br>
                                     list-tags - list all available tags<br>
