@@ -3,8 +3,7 @@ import hudson.EnvVars
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 // test
-def computeChoice(choices, paramName){
-  defaults = [ 
+defaults = [ 
                    "CRQ":"33213213",
                    "ENV":"",
                    "STACK_IDENTIFIER":"",
@@ -18,6 +17,8 @@ def computeChoice(choices, paramName){
                    "PLAYBOOK_DIR":"playbooks/",
                    "OPTIONS":"",
                ]
+def computeChoice(choices, paramName){
+  
   choiceList = choices.split('\n');
   res = defaults[paramName] + "\n"
   for (String item : choiceList) {
