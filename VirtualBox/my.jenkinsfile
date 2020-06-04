@@ -29,7 +29,7 @@ def choices = [
                    "APPLICATION":"chp-f360-gde-app",
                    "OPTIONS":"\ncheck\nlist-hosts\nlist-tags\nlist-tasks\nsyntax-check",
                ]
- def defaults = [ 
+ def default_parameters = [ 
                    "CRQ":[
                             "default":"33213213",
                             "description":""
