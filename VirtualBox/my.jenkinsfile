@@ -5,7 +5,7 @@ import hudson.EnvVars
 
 def defaults = [ 
                    "CRQ":"33213213",
-                   "ENV":"",
+                   "ENV":"development",
                    "STACK_IDENTIFIER":"",
                    "DEBUG": true,
                    "INPUT_ARGUMENTS":'{"load_type": "monthly","group_codes":[],"processed_date":""}',
@@ -36,7 +36,7 @@ pipeline {
                        defaultValue: defaults.CRQ,
                        description: 'CRQs are required for UAT and PRD'
                 choice name: 'ENV',
-                       choices: env.environments,
+                       choices: defaults.ENV,
                        description: 'Choose AWS Account'
                 choice name: 'STACK_IDENTIFIER',
                        choices: '1\n2\n3\n4\n5\n6\n7\n8',
