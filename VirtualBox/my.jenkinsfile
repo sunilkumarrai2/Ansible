@@ -10,6 +10,7 @@ script {
             //build = job.get_last_build()
             //env.all_parameters = build.get_actions()['parameters']
             print(currentBuild.toString())
+            print("HELLO WORLD")
         }
         
         
