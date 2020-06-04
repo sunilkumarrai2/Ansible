@@ -20,7 +20,7 @@ def defaults = [
 script {
             env.defaultBranch = "development"
             //res = hi() 
-            res = gbl
+            //res = gbl
             env.environments = res['environments']
             print(currentBuild.toString())
             print("HELLO WORLD")
