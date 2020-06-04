@@ -2,7 +2,9 @@ import hudson.model.*
 import hudson.EnvVars
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
-// cc
+def hi(){
+  return "../new/"
+}
 def defaults = [ 
                    "CRQ":"33213213",
                    "ENV":"",
@@ -33,7 +35,7 @@ pipeline {
    
    parameters {
                 string name: 'file_location',
-                       defaultValue: "../new/",
+                       defaultValue: hi(),
                        description: 'CRQs are required for UAT and PRD'
                 string name: 'CRQ',
                        defaultValue: defaults.CRQ,
