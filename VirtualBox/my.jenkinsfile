@@ -24,7 +24,7 @@ pipeline {
           description: 'CRQs are required for UAT and PRD'
           
     choice name: 'ENV',
-          choices: "poc\ndev\nsit\nuat",
+          choices: "\npoc\ndev\nsit\nuat",
           description: 'Choose AWS Account'
           
     choice name: 'STACK_IDENTIFIER',
