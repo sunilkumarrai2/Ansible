@@ -4,7 +4,7 @@ import hudson.EnvVars
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 script {
             env.defaultBranch = "development"
-            env.ENV = "uat"
+            params.ENV = "uat"
             //j = Jenkins(env.JENKINS_URL)
             //job = j.get_job("atomosphere pipeline")
             //build = job.get_last_build()
