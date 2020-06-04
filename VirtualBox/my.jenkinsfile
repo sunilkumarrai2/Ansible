@@ -88,6 +88,9 @@ pipeline {
             sh "rm -rf ${params.file_location}"
             sh "cp -r . ${params.file_location}"
          }
+         script{
+            print(currentBuild.toString())
+         }
       }
    }
 }
