@@ -12,7 +12,7 @@ def defaults = [
                    "glue_job_name_to_be_stopped":'chp-f360-gde-1-medical-etl-uat',
                    "TAGS":"",
                    "PLAYBOOK":"",
-                   "BRANCH":env.defaultBranch,
+                   "BRANCH":"development",
                    "APPLICATION":"",
                    "PLAYBOOK_DIR":"playbooks/",
                    "OPTIONS":"",
