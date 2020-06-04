@@ -4,11 +4,12 @@ import hudson.EnvVars
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 
 def hi() {
-    println("Hello World!!!!!!!!!!!!!!")
+   return ["environments":"\npoc\ndev\nsit\nuat"]
 }
 script {
             env.defaultBranch = "development"
-            env.ENV = "uat"
+            res = hi() 
+            env.environments = res['environments']
             //j = Jenkins(env.JENKINS_URL)
             //job = j.get_job("atomosphere pipeline")
             //build = job.get_last_build()
@@ -16,7 +17,7 @@ script {
             print(currentBuild.toString())
             print("HELLO WORLD")
             print(env.BRANCH_NAME)
-            hi() 
+            
         }
         
         
@@ -33,7 +34,7 @@ pipeline {
           description: 'CRQs are required for UAT and PRD'
           
     choice name: 'ENV',
-          choices: "\npoc\ndev\nsit\nuat",
+          choices: env.environments,
           description: 'Choose AWS Account'
           
     choice name: 'STACK_IDENTIFIER',
