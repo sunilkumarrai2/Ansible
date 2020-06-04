@@ -4,7 +4,7 @@ import hudson.EnvVars
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 // test
 def computeChoice(choices, paramName){
-  def defaults = [ 
+  defaults = [ 
                    "CRQ":"33213213",
                    "ENV":"",
                    "STACK_IDENTIFIER":"",
