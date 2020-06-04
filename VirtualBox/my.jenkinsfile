@@ -2,8 +2,9 @@ import hudson.model.*
 import hudson.EnvVars
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
-def hi(){
-  return "../new/"
+def hi(choices){
+  print(choices)
+  return "uat\ndev\nsit\npoc"
 }
 def defaults = [ 
                    "CRQ":"33213213",
@@ -18,6 +19,76 @@ def defaults = [
                    "APPLICATION":"",
                    "PLAYBOOK_DIR":"playbooks/",
                    "OPTIONS":"",
+               ]
+               
+def choices = [ 
+                   "ENV":"poc\ndev\nsit\nuat",
+                   "STACK_IDENTIFIER":'1\n2\n3\n4\n5\n6\n7\n8',
+                   "TAGS":"none\ncode_deploy\ndynamodb_attribute\ndynamodb_operational\ndynamodb_configurational\ns3\nsns\niam\netl_driver_lambda\nom_cleanup_lambda\nglue_job_migrate_cmt\nglue_job_load_attribute_table\nglue_job_enrollment_etl\nglue_job_medical_driver\nglue_job_medical_etl\nglue_job_vision_etl\nglue_job_vsp_extract_etl\nstep_function\nall_glue_jobs\nstop_job_runs\nclear_om_table\nall",
+                   "PLAYBOOK":"provision_f360\nprovision_lambda\nterminate_f360\nterminate_lambda\nexecute_f360\ncode_deploy\njenkinsfile_update",
+                   "APPLICATION":"chp-f360-gde-app",
+                   "OPTIONS":"\ncheck\nlist-hosts\nlist-tags\nlist-tasks\nsyntax-check",
+               ]
+ def defaults = [ 
+                   "CRQ":[
+                            "default":"33213213",
+                            "description":""
+                          ],
+                   "ENV":[
+                            "choices":"",
+                            "default":"",
+                            "description":""
+                          ],
+                   "STACK_IDENTIFIER":[
+                                        "choices":"",
+                                        "default":"",
+                                        "description":""
+                                      ],
+                   "DEBUG": [
+                              "choices":"",
+                              "default":"",
+                              "description":""
+                            ],
+                   "INPUT_ARGUMENTS":[
+                                      "choices":"",
+                                      "default":'{"load_type": "monthly","group_codes":[],"processed_date":""}',
+                                      "description":""
+                                     ],
+                   "glue_job_name_to_be_stopped":[
+                                                  "choices":"",
+                                                  "default":"",
+                                                  "description":""
+                                                 ],
+                   "TAGS":[
+                            "choices":"",
+                            "default":"",
+                            "description":""
+                          ],
+                   "PLAYBOOK":[
+                                "choices":"",
+                                "default":"",
+                                "description":""
+                              ],
+                   "BRANCH":[
+                              "choices":"",
+                              "default":"",
+                              "description":""
+                            ],
+                   "APPLICATION":[
+                                  "choices":"",
+                                  "default":"",
+                                  "description":""
+                                 ],
+                   "PLAYBOOK_DIR":[
+                                  "choices":"",
+                                  "default":"",
+                                  "description":""
+                                ],
+                   "OPTIONS":[
+                                "choices":"",
+                                "default":"",
+                                "description":""
+                              ],
                ]
 script {
             env.defaultBranch = "development"
@@ -35,13 +106,13 @@ pipeline {
    
    parameters {
                 string name: 'file_location',
-                       defaultValue: hi(),
+                       defaultValue: "../new/",
                        description: 'CRQs are required for UAT and PRD'
                 string name: 'CRQ',
                        defaultValue: defaults.CRQ,
                        description: 'CRQs are required for UAT and PRD'
                 choice name: 'ENV',
-                       choices: "poc\ndev\nsit\nuat",
+                       choices: hi("poc\ndev\nsit\nuat"),
                        description: 'Choose AWS Account'
                 choice name: 'STACK_IDENTIFIER',
                        choices: '1\n2\n3\n4\n5\n6\n7\n8',
