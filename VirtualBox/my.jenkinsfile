@@ -80,7 +80,7 @@ pipeline {
             sh "echo file_location : ${params.file_location}"
             sh "echo crq : ${params.CRQ}"
             sh "echo env : ${params.ENV}"
-            sh "echo getBuildCauses : ${currentBuild}"
+            sh "echo getBuildCauses : ${currentBuild.previousBuild}"
             //sh "echo all_param : ${env.all_parameters}"
             sh "echo '*********************************'"
             //git credentialsId: 'bf5e3fbc-9467-41c0-942b-13c4ed7cc822', url: 'https://github.com/sunilkumarrai2/Ansible.git'
