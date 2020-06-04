@@ -6,9 +6,11 @@ import hudson.EnvVars
 def hi() {
    return ["environments":"\npoc\ndev\nsit\nuat"]
 }
+def gbl = ["environments":"\npoc\ndev\nsit\nuat"]
 script {
             env.defaultBranch = "development"
-            res = hi() 
+            //res = hi() 
+            res = gbl
             env.environments = res['environments']
             //j = Jenkins(env.JENKINS_URL)
             //job = j.get_job("atomosphere pipeline")
