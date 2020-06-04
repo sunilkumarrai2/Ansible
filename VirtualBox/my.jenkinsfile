@@ -21,7 +21,7 @@ script {
             env.defaultBranch = "development"
             //res = hi() 
             //res = gbl
-            env.environments = res['environments']
+            //env.environments = res['environments']
             print(currentBuild.toString())
             print("HELLO WORLD")
             print(env.BRANCH_NAME)
