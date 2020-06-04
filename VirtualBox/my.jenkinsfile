@@ -11,6 +11,7 @@ script {
             //env.all_parameters = build.get_actions()['parameters']
             print(currentBuild.toString())
             print("HELLO WORLD")
+            print(env.BRANCH_NAME)
         }
         
         
