@@ -32,6 +32,9 @@ pipeline {
    agent any
    
    parameters {
+                string name: 'file_location',
+                       defaultValue: "../new/",
+                       description: 'CRQs are required for UAT and PRD'
                 string name: 'CRQ',
                        defaultValue: defaults.CRQ,
                        description: 'CRQs are required for UAT and PRD'
