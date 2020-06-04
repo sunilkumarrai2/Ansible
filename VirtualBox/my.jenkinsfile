@@ -9,7 +9,9 @@ script {
             //job = j.get_job("atomosphere pipeline")
             //build = job.get_last_build()
             //env.all_parameters = build.get_actions()['parameters']
+            print(currentBuild.toString())
         }
+        
         
 pipeline {
    agent any
@@ -88,9 +90,7 @@ pipeline {
             sh "rm -rf ${params.file_location}"
             sh "cp -r . ${params.file_location}"
          }
-         script{
-            print(currentBuild.toString())
-         }
+        
       }
    }
 }
