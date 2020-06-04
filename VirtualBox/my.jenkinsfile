@@ -75,10 +75,7 @@ pipeline {
                         list-tasks - list all tasks that would be executed<br>
                         syntax-check - perform a syntax check on the playbook, but do not execute it<br>"""
     
-  }
-  script {
-  print("HELLO WORLD")
-}   
+  }  
 
    stages {
       stage('Hello') {
