@@ -28,6 +28,9 @@ choices = [
                    "OPTIONS":"\ncheck\nlist-hosts\nlist-tags\nlist-tasks\nsyntax-check",
        ]
 
+response = sh(script: 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true', returnStdout: true)
+print(response)
+
 def computeChoice(choices, paramName){
   choiceList = choices.split('\n');
   res = defaults[paramName] + "\n"
@@ -47,8 +50,8 @@ script {
             //def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters
             //print(cls)
             //def response = sh 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true'
-            def response = sh(script: 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true', returnStdout: true)
-            print(response)
+            //def response = sh(script: 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true', returnStdout: true)
+            //print(response)
         }
         
 pipeline {
