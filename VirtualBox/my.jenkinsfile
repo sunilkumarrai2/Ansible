@@ -43,6 +43,8 @@ script {
             print(currentBuild.toString())
             print("HELLO WORLD")
             print(env.BRANCH_NAME)
+            def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters
+            print(cls)
             
         }
         
