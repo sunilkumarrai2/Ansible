@@ -1,6 +1,6 @@
 import hudson.model.*
 import hudson.EnvVars
-import groovyx.net.http.RESTClient
+//import groovyx.net.http.RESTClient
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 //test
@@ -46,7 +46,8 @@ script {
             print(env.BRANCH_NAME)
             //def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters
             //print(cls)
-            
+            def response = sh 'curl https://some-host/some-service/getApi?apikey=someKey'
+            print(response)
         }
         
 pipeline {
