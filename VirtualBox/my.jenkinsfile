@@ -30,7 +30,7 @@ choices = [
        ]
 node{
 //curl --silent --show-error http://sunilkjumarrai2:116bf8ce6b0e0cbe97327a9702f007b47d@620daac4c307.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
-response = sh(script: 'curl http://620daac4c307.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true --user sunilkumarrai2:116bf8ce6b0e0cbe97327a9702f007b47d', returnStdout: true)
+response = sh(script: 'curl http://620daac4c307.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true -H "Accept: application/json" --user sunilkumarrai2:116bf8ce6b0e0cbe97327a9702f007b47d', returnStdout: true)
 //print(response["actions"][2]["parameters"])
 print(response)
 }
