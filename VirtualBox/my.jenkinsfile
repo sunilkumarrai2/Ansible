@@ -3,6 +3,7 @@ import hudson.EnvVars
 //import groovyx.net.http.RESTClient
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
+//http://620daac4c307.ngrok.io/user/sunilkumarrai2/configure
 //test
 defaults = [ 
                    "CRQ":"33213213",
@@ -28,7 +29,8 @@ choices = [
                    "OPTIONS":"\ncheck\nlist-hosts\nlist-tags\nlist-tasks\nsyntax-check",
        ]
 node{
-response = sh(script: 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true', returnStdout: true)
+//curl --silent --show-error http://sunilkjumarrai2:116bf8ce6b0e0cbe97327a9702f007b47d@620daac4c307.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
+response = sh(script: 'curl http://620daac4c307.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true --user sunilkumarrai2:116bf8ce6b0e0cbe97327a9702f007b47d', returnStdout: true)
 print(response)
 }
 def computeChoice(choices, paramName){
