@@ -1,5 +1,6 @@
 import hudson.model.*
 import hudson.EnvVars
+import groovyx.net.http.RESTClient
 
 //http://224fac2050a6.ngrok.io/job/atomosphere%20pipeline/50/api/json?pretty=true
 //test
@@ -43,8 +44,8 @@ script {
             print(currentBuild.toString())
             print("HELLO WORLD")
             print(env.BRANCH_NAME)
-            def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters
-            print(cls)
+            //def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters
+            //print(cls)
             
         }
         
