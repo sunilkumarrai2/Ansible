@@ -46,7 +46,8 @@ script {
             print(env.BRANCH_NAME)
             //def cls = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters
             //print(cls)
-            def response = sh 'curl https://some-host/some-service/getApi?apikey=someKey'
+            //def response = sh 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true'
+            def response = sh(script: 'curl http://620daac4c307.ngrok.io//job/atomosphere%20pipeline/50/api/json?pretty=true', returnStdout: true)
             print(response)
         }
         
